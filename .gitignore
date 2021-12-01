@@ -1,0 +1,5 @@
+LeReS/input/*
+LeReS/output/*
+*.mp4
+*.pyc
+*.pth

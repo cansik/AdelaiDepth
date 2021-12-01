@@ -48,11 +48,11 @@ if __name__ == '__main__':
     load_ckpt(args, depth_model, None, None)
     depth_model.cuda()
 
-    image_dir = os.path.dirname(os.path.dirname(__file__)) + '/test_images/'
+    image_dir = os.path.dirname(os.path.dirname(__file__)) + '/input/'
     imgs_list = os.listdir(image_dir)
     imgs_list.sort()
     imgs_path = [os.path.join(image_dir, i) for i in imgs_list if i != 'outputs']
-    image_dir_out = image_dir + '/outputs'
+    image_dir_out = os.path.dirname(os.path.dirname(__file__)) + '/output/'
     os.makedirs(image_dir_out, exist_ok=True)
 
     for i, v in enumerate(imgs_path):
@@ -71,7 +71,8 @@ if __name__ == '__main__':
         #pred_depth_metric = recover_metric_depth(pred_depth_ori, gt_depth)
 
         img_name = v.split('/')[-1]
-        cv2.imwrite(os.path.join(image_dir_out, img_name), rgb)
+        # cv2.imwrite(os.path.join(image_dir_out, img_name), rgb)
         # save depth
-        plt.imsave(os.path.join(image_dir_out, img_name[:-4]+'-depth.png'), pred_depth_ori, cmap='rainbow')
-        cv2.imwrite(os.path.join(image_dir_out, img_name[:-4]+'-depth_raw.png'), (pred_depth_ori/pred_depth_ori.max() * 60000).astype(np.uint16))
+        # plt.imsave(os.path.join(image_dir_out, img_name[:-4]+'-depth.png'), pred_depth_ori, cmap='rainbow')
+        # cv2.imwrite(os.path.join(image_dir_out, img_name[:-4]+'-depth_raw.png'), (pred_depth_ori/pred_depth_ori.max() * 60000).astype(np.uint16))
+        cv2.imwrite(os.path.join(image_dir_out, img_name), (pred_depth_ori/pred_depth_ori.max() * 60000).astype(np.uint16))
